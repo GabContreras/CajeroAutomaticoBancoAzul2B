@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cajero Automático</title>
+    <!--no borrar -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <style>
+        .masthead {
+            height: 20vh;
+            min-height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        #contenedor {
+            background-color: #1A4D2E;
+            color: white;
+        }
+
+        body {
+            background-color: #0079FF;
+        }
+
+        #saludo {
+            text-align: center;
+        }
+    </style>
+
+
+    <header class="masthead">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12 text-center">
+                    <img src="images/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container mt-5" id="contenedor">
+        <div class="row justify-content-center mt-4">
+            <div class="mb-3">
+                <label class="form-label" for="nombre">Ingresa tu nombre:</label>
+                <input type="text" id="nombrePro" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="retirar">Ingrese cantidad a retirar:</label>
+                <input type="number" id="retirar" class="form-control" />
+            </div>
+            <button id="enviarBtn" class="btn btn-success w-25">Realizar retiro</button>
+            <div class="container">
+
+                <p id="saludo"></p>
+
+                <div class="mb-3">
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <label for="b1" class="form-label">Billetes de 1$</label>
+                            <input type="text" class="form-control" id="billetede1" readonly>
+                        </div>
+                        <div class="col-6">
+                            <label for="b20" class="form-label">Billetes de 20$</label>
+                            <input type="text" class="form-control" id="billetede20" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <label for="b5" class="form-label">Billetes de 5$</label>
+                            <input type="text" class="form-control" id="billetede5" readonly>
+                        </div>
+                        <div class="col-6">
+                            <label for="b50" class="form-label">Billetes de 50$</label>
+                            <input type="text" class="form-control" id="billetede50" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <label for="b10" class="form-label">Billetes de 10$</label>
+                            <input type="text" class="form-control" id="billetede10" readonly>
+                        </div>
+                        <div class="col-6">
+                            <label for="b100" class="form-label">Billetes de 100$</label>
+                            <input type="text" class="form-control" id="billetede100" readonly>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <a href="https://www.youtube.com/watch?v=Wjavakm7gMQ" id="easterEggLink">
+        <img src="images/easterEgg.jpg" alt="easterEgg" style="float: right; width: 50px; height: 50px;">
+    </a>
+    <footer class="container-fluid bg-dark text-white py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">Gabriel Alejandro Contreras Cruz 20230454</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-0 text-md-end">Ricardo Gálvez Guzmán 20230332</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function retiro() {
+            // Obtener valores
+            const nombre = document.getElementById("nombrePro").value;
+            // Obtener el valor del campo de número con el ID "retirar"
+            const cantidad = parseFloat(document.getElementById("retirar").value);
+
+            if (isNaN(cantidad) || cantidad <= 0 || nombre == "") {
+                alert("Por favor, ingresa una cantidad válida o no dejes campos vacíos.");
+                return;
+            }
+
+            let mostrarMensaje = document.getElementById("saludo");
+            mostrarMensaje.innerHTML = "Hola " + nombre + ", tu retiro se realizó de la siguiente manera:";
+            mostrarMensaje.classList.add("mostrar");
+
+            // Calcular la cantidad de billetes
+            const billetede100 = Math.floor(cantidad / 100);
+            const billetede50 = Math.floor((cantidad % 100) / 50);
+            const billetede20 = Math.floor(((cantidad % 100) % 50) / 20);
+            const billetede10 = Math.floor((((cantidad % 100) % 50) % 20) / 10);
+            const billetede5 = Math.floor(((((cantidad % 100) % 50) % 20) % 10) / 5);
+            const billetede1 = Math.floor((((((cantidad % 100) % 50) % 20) % 10) % 5) / 1);
+
+
+            document.getElementById("billetede100").value = billetede100;
+            document.getElementById("billetede50").value = billetede50;
+            document.getElementById("billetede20").value = billetede20;
+            document.getElementById("billetede10").value = billetede10;
+            document.getElementById("billetede5").value = billetede5;
+            document.getElementById("billetede1").value = billetede1;
+        }
+        document.getElementById("enviarBtn").addEventListener("click", retiro);
+
+        function easterEgg(e) {
+            e.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
+
+            // Mostrar la alerta
+            alert('Easter Egg encontrado, redireccionando a tu recompensa.');
+
+            // Redireccionar a la URL
+            window.location.href = this.getAttribute('href');
+        }
+        document.getElementById("easterEggLink").addEventListener("click", easterEgg);
+
+    </script>
+
+    <!--no borrar -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
